@@ -15,3 +15,18 @@ Practice set score: **713,285 / 1,000,000** in ~31 s for all 8 images (house bas
 ```sh
 node main.ts
 ```
+
+## Practice results
+
+| Instance | Theme | Bytes | Points (of 125,000) | Winning stream |
+| --- | --- | ---: | ---: | --- |
+| i001 | flat | 12,496 | 89,796 | zlib level 9 |
+| i002 | rich | 51,852 | 88,192 | zlib level 9 |
+| i003 | alpha | 102,217 | 87,717 | custom DEFLATE |
+| i004 | grey | 103,669 | 88,500 | custom DEFLATE |
+| i005 | flat | 16,552 | 92,781 | zlib level 9 |
+| i006 | rich | 171,909 | 89,353 | custom DEFLATE |
+| i007 | alpha | 60,935 | 87,676 | zlib level 9 |
+| i008 | grey | 24,897 | 89,270 | zlib level 9 |
+
+Every output decodes pixel-exact (verified against the kit decoder). The custom DEFLATE wins on the images where long matches dominate; zlib wins where the optimal-parse block headers cost more than they save — the `min()` of the two is what ships. Work is budgeted by fixed block sizes and chain depths, never by the clock, so the 60-second wall for the whole set is met with margin.
